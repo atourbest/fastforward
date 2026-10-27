@@ -8,142 +8,150 @@
 <meta name="description" content="Get feedback you'll love - in 5 days. A free 5-day email challenge from Jason Moore, author of FAST Forward.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&family=Onest:wght@500;600&family=Open+Sans:wght@400&family=Work+Sans:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Work+Sans:wght@700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#E91B58;
-    --pink:#E31E54;
-    --kicker:#E34E51;
-    --ink:#000;
-    --muted:rgba(0,0,0,.67);
-    --faint:rgba(0,0,0,.4);
+    --pink:#E9185A;          /* brand crimson, from the book cover */
+    --pink-dark:#C4104A;
+    --gold:#CFB75E;          /* brand olive-gold (hare) */
+    --ink:#1C1A1D;
+    --body:#2E2A30;
+    --muted:#6E6870;
+    --line:rgba(0,0,0,.12);
+    --tint:#FDF1F5;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html,body{min-height:100%}
   body{
-    background:var(--bg);
+    background:var(--pink);
     font-family:"Outfit",system-ui,sans-serif;
-    color:var(--ink);
-    letter-spacing:-0.025em;
+    color:var(--body);
+    letter-spacing:-0.02em;
     -webkit-font-smoothing:antialiased;
+    min-height:100vh;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
-    min-height:100vh;padding:56px 16px;
+    padding:48px 16px;
   }
   img{display:block;max-width:100%}
 
-  .page{width:100%;max-width:953px}
-
-  /* Card */
-  .card{
-    background:#fff;border:1px solid rgba(0,0,0,.1);border-radius:13px;
-    overflow:hidden;
-  }
+  .page{width:100%;max-width:980px}
+  .card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 24px 60px rgba(90,0,30,.25)}
   .card-main{display:flex}
-  .col-left{flex:0 0 455px;padding:24px 35px 32px}
-  .col-right{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;padding:0 35px 32px 0}
 
-  .kicker{color:var(--kicker);font-weight:500;font-size:17.33px;line-height:1.625}
-  h1{
-    color:var(--muted);font-weight:700;font-size:36.83px;line-height:1;
-    letter-spacing:-0.0235em;margin-top:13px;
-  }
-  .lead{font-size:21.67px;line-height:1.25;margin-top:13px}
+  /* Left: offer + form */
+  .col-left{flex:0 0 470px;padding:36px 38px 34px}
+  .kicker{color:var(--pink);font-weight:600;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+  h1{color:var(--ink);font-weight:700;font-size:40px;line-height:1.02;letter-spacing:-0.03em;margin-top:12px}
+  h1 em{font-style:normal;color:var(--pink)}
+  .lead{font-size:19px;line-height:1.45;margin-top:16px}
 
-  ul.ticks{list-style:none;margin-top:34px;max-width:295px}
-  ul.ticks li{display:flex;gap:10px;font-size:15.17px;line-height:1.625}
-  ul.ticks li + li{margin-top:15px}
+  ul.ticks{list-style:none;margin-top:22px;display:grid;gap:11px}
+  ul.ticks li{display:flex;gap:11px;font-size:16px;line-height:1.45}
   ul.ticks li::before{
     content:"";flex:0 0 18px;height:18px;margin-top:3px;
-    background:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%23E91B58' d='M39.4 11.2c0 .4-.2.7-.5 1L16.1 35c-.3.3-.7.5-1.1.5s-.8-.2-1.1-.5L1.1 22.2c-.3-.3-.5-.6-.5-1s.2-.7.5-1l2.1-2.1c.3-.3.6-.5 1-.5s.7.2 1 .5l9.8 9.8 19.7-19.7c.3-.3.6-.5 1-.5s.7.2 1 .5l2.1 2.1c.3.3.6.6.6 1.1z'/%3E%3C/svg%3E") center/contain no-repeat;
+    background:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath fill='%23E9185A' d='M39.4 11.2c0 .4-.2.7-.5 1L16.1 35c-.3.3-.7.5-1.1.5s-.8-.2-1.1-.5L1.1 22.2c-.3-.3-.5-.6-.5-1s.2-.7.5-1l2.1-2.1c.3-.3.6-.5 1-.5s.7.2 1 .5l9.8 9.8 19.7-19.7c.3-.3.6-.5 1-.5s.7.2 1 .5l2.1 2.1c.3.3.6.6.6 1.1z'/%3E%3C/svg%3E") center/contain no-repeat;
   }
+  ul.ticks strong{color:var(--ink);font-weight:600}
 
-  form{margin-top:34px;display:flex;flex-direction:column;gap:13px}
+  form{margin-top:26px;display:flex;flex-direction:column;gap:11px}
   input[type=email]{
-    width:100%;height:52px;padding:0 18px;
-    font-family:"Open Sans",system-ui,sans-serif;font-size:17.33px;color:#000;
-    border:1px solid rgba(0,0,0,.15);border-radius:4.33px;background:#fff;
+    width:100%;height:54px;padding:0 18px;
+    font-family:inherit;font-size:17px;letter-spacing:0;color:var(--ink);
+    border:1.5px solid var(--line);border-radius:8px;background:#fff;
   }
-  input[type=email]::placeholder{color:rgba(0,0,0,.45)}
-  input[type=email]:focus{outline:none;border-color:var(--bg);box-shadow:0 0 0 3px rgba(233,27,88,.15)}
+  input[type=email]::placeholder{color:#9a939c}
+  input[type=email]:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 4px rgba(233,24,90,.14)}
   .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-  button{
-    height:52px;border:0;border-radius:4.33px;cursor:pointer;
-    background:var(--bg);color:#fff;
-    font-family:"Work Sans",system-ui,sans-serif;font-weight:700;font-size:17.33px;letter-spacing:0;
-    transition:transform .15s ease, filter .15s ease;
+  .btn{
+    height:54px;border:0;border-radius:8px;cursor:pointer;
+    background:var(--pink);color:#fff;
+    font-family:"Work Sans",system-ui,sans-serif;font-weight:700;font-size:17px;letter-spacing:0;
+    box-shadow:0 8px 20px rgba(233,24,90,.28);
+    transition:transform .15s ease, background .15s ease;
   }
-  button:hover{transform:translateY(-1px);filter:brightness(1.05)}
-  button[disabled]{opacity:.7;cursor:wait;transform:none}
+  .btn:hover{transform:translateY(-1px);background:var(--pink-dark)}
+  .btn[disabled]{opacity:.7;cursor:wait;transform:none}
   .form-error{display:none;color:#B3123F;font-size:15px;line-height:1.4;text-align:center}
   .form-error.show{display:block}
+  .fine{color:var(--muted);font-size:14px;line-height:1.5;text-align:center;margin-top:12px}
+  .proof{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px;
+    font-size:14px;line-height:1.4;color:var(--body);text-align:left}
+  .proof img{width:38px;flex:0 0 auto}
+  .proof strong{color:var(--ink);font-weight:600}
 
-  .fine{color:var(--faint);font-size:15.17px;line-height:1.625;text-align:center;margin-top:13px}
-  .sig{width:165px;margin:13px auto 0}
+  /* Shown in place of the form after sign-up */
+  .signed{display:none;margin-top:26px;padding:18px 20px;border-radius:10px;background:var(--tint);
+    border:1.5px solid rgba(233,24,90,.2);font-size:16px;line-height:1.5}
+  .signed strong{color:var(--pink);font-weight:700}
+  body.is-done form, body.is-done .fine{display:none}
+  body.is-done .signed{display:block}
 
-  /* Right column: book image placeholder */
-  .book{
-    width:100%;max-width:476px;aspect-ratio:476/620;margin-left:auto;
-    border-radius:0 12px 0 0;
-    display:flex;align-items:center;justify-content:center;
-    background:repeating-linear-gradient(45deg,#fdf0f4 0 14px,#fbe6ed 14px 28px);
-    border:2px dashed rgba(233,27,88,.35);border-top:0;border-right:0;
-    color:var(--pink);font-weight:500;font-size:15px;text-align:center;
-  }
-  .book img{width:100%;height:100%;object-fit:contain}
-  .based{font-family:"Onest",system-ui,sans-serif;color:var(--pink);font-weight:600;font-size:26px;line-height:1.625;margin-top:13px;text-align:center}
-  .cred{font-family:"Onest",system-ui,sans-serif;font-weight:500;font-size:17.33px;line-height:1.625;text-align:center;max-width:385px;margin-top:13px}
+  .sig{width:150px;margin:20px auto 0}
 
-  /* Thank-you state */
-  .done{display:none;max-width:560px;margin:0 auto;padding:48px 40px;text-align:left}
-  .done h2{color:var(--muted);font-weight:700;font-size:36.83px;line-height:1.1;margin-bottom:20px}
-  .done p{font-size:18px;line-height:1.6;margin-bottom:14px}
-  .done .sign{font-weight:500}
-  body.is-done .card-main{display:none}
-  body.is-done .done{display:block}
+  /* Right: scene image */
+  .col-right{flex:1 1 auto;display:flex;flex-direction:column;min-width:0}
+  .scene{flex:1 1 auto;min-height:420px;position:relative;overflow:hidden;background:#eee}
+  .scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:52% 50%}
+  .caption{padding:18px 30px 24px;text-align:center}
+  .caption h3{color:var(--pink);font-weight:600;font-size:22px;line-height:1.3}
+  .caption p{font-size:15.5px;line-height:1.5;margin-top:4px}
 
-  /* Book pop-up (shown after sign-up) */
-  dialog.bookpop{
-    margin:auto;border:0;border-radius:16px;padding:0;max-width:420px;width:calc(100% - 32px);
+  /* 5-day strip */
+  .days{border-top:1px solid var(--line);padding:22px 38px 26px;background:#FFFBFC}
+  .days h2{font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:center}
+  .days ol{list-style:none;display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:14px}
+  .days li{background:#fff;border:1px solid var(--line);border-top:4px solid var(--pink);border-radius:10px;padding:12px 12px 14px}
+  .days .d{display:block;color:var(--pink);font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+  .days .t{display:block;color:var(--ink);font-weight:600;font-size:16px;line-height:1.25;margin-top:4px}
+
+  footer{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:24px;padding:0 2px}
+  footer img{width:132px;height:auto}
+  footer p{color:#fff;font-size:11px;opacity:.9}
+
+  /* Pop-up after sign-up */
+  dialog.pop{
+    margin:auto;border:0;border-radius:18px;padding:0;max-width:440px;width:calc(100% - 32px);
     box-shadow:0 30px 80px rgba(0,0,0,.35);overflow:visible;
   }
-  dialog.bookpop::backdrop{background:rgba(40,0,15,.55)}
-  dialog.bookpop[open]{animation:pop .25s ease-out}
+  dialog.pop::backdrop{background:rgba(40,0,15,.6)}
+  dialog.pop[open]{animation:pop .25s ease-out}
   @keyframes pop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
-  .bookpop .inner{padding:34px 30px 28px;text-align:center}
-  .bookpop .x{position:absolute;top:10px;right:12px;width:36px;height:36px;border:0;background:none;
+  .pop .inner{padding:30px 30px 24px;text-align:center}
+  .pop .x{position:absolute;top:10px;right:12px;width:36px;height:36px;border:0;background:none;
     font-size:26px;line-height:1;color:rgba(0,0,0,.45);cursor:pointer;border-radius:50%}
-  .bookpop .x:focus-visible{outline:2px solid var(--bg)}
-  .bookpop .x:hover{background:rgba(0,0,0,.06);transform:none;filter:none}
-  .bookpop .tag{color:var(--kicker);font-weight:500;font-size:15px}
-  .bookpop h2{color:var(--muted);font-weight:700;font-size:28px;line-height:1.1;margin:8px 0 12px}
-  .bookpop p{font-size:16.5px;line-height:1.55}
-  .bookpop .buy{display:flex;flex-direction:column;gap:10px;margin-top:22px}
-  .bookpop .buy a{
-    display:block;height:50px;line-height:50px;border-radius:8px;text-decoration:none;
-    font-family:"Work Sans",system-ui,sans-serif;font-weight:700;font-size:16.5px;letter-spacing:0;
+  .pop .x:hover{background:rgba(0,0,0,.06)}
+  .pop .x:focus-visible{outline:2px solid var(--pink)}
+  .pop .hare{width:64px;margin:0 auto 6px}
+  .pop h2{color:var(--ink);font-weight:700;font-size:32px;line-height:1.1}
+  .pop .next{font-size:16px;line-height:1.5;margin-top:10px}
+  .pop .book{margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+  .pop .book h3{color:var(--pink);font-weight:600;font-size:19px}
+  .pop .book p{font-size:15.5px;line-height:1.5;margin-top:6px}
+  .pop .buy{display:flex;gap:10px;margin-top:16px}
+  .pop .buy a{
+    flex:1;display:block;height:48px;line-height:48px;border-radius:8px;text-decoration:none;
+    font-family:"Work Sans",system-ui,sans-serif;font-weight:700;font-size:15.5px;letter-spacing:0;
   }
-  .bookpop .buy a.primary{background:var(--bg);color:#fff}
-  .bookpop .buy a.secondary{border:3px solid var(--bg);color:var(--pink);line-height:44px}
-  .bookpop .later{margin-top:14px;background:none;border:0;height:auto;color:rgba(0,0,0,.5);
-    font-family:"Outfit",system-ui,sans-serif;font-weight:400;font-size:14.5px;text-decoration:underline;cursor:pointer}
-  .bookpop .later:hover{transform:none;filter:none;color:#000}
+  .pop .buy a.primary{background:var(--pink);color:#fff}
+  .pop .buy a.secondary{border:2.5px solid var(--pink);color:var(--pink);line-height:43px}
+  .pop .later{margin-top:14px;background:none;border:0;color:var(--muted);font-family:inherit;
+    font-size:14.5px;text-decoration:underline;cursor:pointer}
+  .pop .later:hover{color:var(--ink)}
 
-  footer{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:26px;padding:0 2px}
-  footer img{width:132px;height:auto}
-  footer p{font-family:"Open Sans",system-ui,sans-serif;color:#fff;font-size:10.83px}
-
-  @media (max-width:860px){
+  @media (max-width:900px){
     .card-main{flex-direction:column}
-    .col-left{flex:none;padding:28px 24px 8px}
-    .col-right{padding:16px 24px 32px}
-    .book{margin:0 auto;border-radius:10px;border:2px dashed rgba(233,27,88,.35);max-width:340px}
-    h1{font-size:32px}
-    .lead{font-size:19px}
-    ul.ticks{max-width:none}
-    .done{padding:36px 24px}
+    .col-left{flex:none;padding:30px 24px 26px}
+    .scene{flex:none;min-height:0;aspect-ratio:4/3}
+    .scene img{object-position:50% 40%}
+    .days{padding:22px 24px 24px}
+    .days ol{grid-template-columns:1fr;gap:8px}
+    .days li{display:flex;gap:12px;align-items:baseline;border-top:1px solid var(--line);border-left:4px solid var(--pink);padding:10px 14px}
+    .days .t{margin-top:0}
+    h1{font-size:34px}
+    .lead{font-size:18px}
   }
   @media (max-width:480px){
-    body{padding:24px 16px}
+    body{padding:20px 12px}
+    .pop .buy{flex-direction:column}
     footer{flex-direction:column;gap:10px}
   }
 </style>
@@ -152,45 +160,55 @@
 
 <main class="page">
   <div class="card">
-    <!-- Sign-up view -->
     <div class="card-main">
       <div class="col-left">
-        <p class="kicker">Free 5 Day FEEDBACK challenge</p>
-        <h1>Get feedback you’ll love - in 5 days</h1>
-        <p class="lead">One short email a day, one five-minute action. After 5 days, you’ll have the full FAST method working for you — and growth that feels good, not painful.</p>
+        <p class="kicker">Free 5-day feedback challenge</p>
+        <h1>Get feedback <em>you’ll love</em> — in 5 days</h1>
+        <p class="lead">Most feedback shows up when you didn’t ask for it. This challenge flips that. You stop waiting for feedback and start asking for advice — from the people you choose, about what you want to get better at.</p>
 
         <ul class="ticks">
-          <li>One stupid-simple idea from FAST Forward - every day</li>
-          <li>5 minutes a day — each email ends with one small action</li>
-          <li>In 5 days you'll have the full FAST method working for you</li>
+          <li><span><strong>The one switch:</strong> ask for advice, not feedback.</span></li>
+          <li><span><strong>5 minutes a day:</strong> one video under 3 minutes and one 2-minute action.</span></li>
+          <li><span><strong>You stay in control:</strong> you pick the topic, the people and the questions.</span></li>
+          <li><span><strong>See yourself clearly:</strong> how the people you work with really experience you — and what to work on next.</span></li>
         </ul>
 
         <form id="signup" novalidate>
-          <input type="email" name="email" id="email" placeholder="Email" maxlength="128" autocomplete="email" required aria-label="Email address">
+          <input type="email" name="email" id="email" placeholder="Your email address" maxlength="128" autocomplete="email" required aria-label="Email address">
           <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
-          <button type="submit">Start my FREE 5 Day Challenge</button>
+          <button class="btn" type="submit">Start the free 5-day challenge</button>
           <p class="form-error" id="form-error" role="alert"></p>
         </form>
+        <p class="fine">Free. One email a day for 5 days. Unsubscribe any time.</p>
 
-        <p class="fine">Free. No spam — just the challenge.<br>Unsubscribe any time.</p>
+        <div class="signed" id="signed" role="status">
+          <strong>You’re in.</strong> Check your inbox for a “you’re in” email. Day 1 arrives tomorrow.
+        </div>
+
+        <p class="proof"><img src="images/hare.png" alt=""><span><strong>500,000+ people</strong> have attended an experience based on Jason’s work.</span></p>
         <img class="sig" src="images/signature.png" alt="Jason Moore">
       </div>
 
       <div class="col-right">
-        <!-- PLACEHOLDER: swap this div's contents for <img src="images/book.png" alt="FAST Forward book"> -->
-        <div class="book" role="img" aria-label="FAST Forward book">Book image<br>placeholder</div>
-        <h3 class="based">Based on the book</h3>
-        <p class="cred">More than 500,000 people have attended an experience based on Jason’s work — including teams from Microsoft, Intuit, HSBC and Netflix.</p>
+        <div class="scene">
+          <img src="images/book-scene.webp" alt="A character from FAST Forward smiling across a café table as she hands over the book">
+        </div>
+        <div class="caption">
+          <h3>Based on the book</h3>
+          <p>Jason’s work has reached teams at Microsoft, Intuit, HSBC and Netflix.</p>
+        </div>
       </div>
     </div>
 
-    <!-- Thank-you view -->
-    <section class="done" id="done" aria-live="polite">
-      <h2>You're in!</h2>
-      <p>I've just sent you a quick "you're in" email — if it's not in your inbox in the next couple of minutes, check your spam folder and drag it out so the good stuff doesn't get lost.</p>
-      <p>Day 1 of the challenge lands tomorrow, and from there you'll get one short email a day for five days - each with a simple, powerful framework you can try in about five minutes.</p>
-      <p>That's it. Nothing to prepare, nothing to download. See you tomorrow!</p>
-      <p class="sign">— Jason</p>
+    <section class="days" aria-labelledby="days-title">
+      <h2 id="days-title">Your 5 days</h2>
+      <ol>
+        <li><span class="d">Day 1</span><span class="t">Ask, don’t wait</span></li>
+        <li><span class="d">Day 2</span><span class="t">The FAST framework</span></li>
+        <li><span class="d">Day 3</span><span class="t">Your FAST360</span></li>
+        <li><span class="d">Day 4</span><span class="t">Turn advice into action</span></li>
+        <li><span class="d">Day 5</span><span class="t">Make it stick</span></li>
+      </ol>
     </section>
   </div>
 
@@ -200,17 +218,21 @@
   </footer>
 </main>
 
-<dialog class="bookpop" id="bookpop" aria-labelledby="bookpop-title">
+<dialog class="pop" id="pop" aria-labelledby="pop-title">
   <button class="x" type="button" data-close aria-label="Close">&times;</button>
   <div class="inner">
-    <p class="tag">While you wait for Day 1</p>
-    <h2 id="bookpop-title">Want the whole story?</h2>
-    <p>The challenge gives you the method. The book shows it in action — through Alex, a leader who learns to stop giving feedback and start asking for advice.</p>
-    <div class="buy">
-      <a class="primary" autofocus href="https://www.amazon.com/Fast-Forward-Leadership-Fable-feedback/dp/1068480149/" target="_blank" rel="noopener">Get the paperback →</a>
-      <a class="secondary" href="https://www.amazon.com/Fast-Forward-Leadership-Fable-feedback-ebook/dp/B0G4FHDMD7/" target="_blank" rel="noopener">Get it on Kindle →</a>
+    <img class="hare" src="images/hare.png" alt="">
+    <h2 id="pop-title">You’re in!</h2>
+    <p class="next">Check your inbox for a “you’re in” email. Not there in a couple of minutes? Look in spam and drag it out. Day 1 arrives tomorrow.</p>
+    <div class="book">
+      <h3>Want the whole story now?</h3>
+      <p>The challenge gives you the method. The book shows it in action.</p>
+      <div class="buy">
+        <a class="primary" autofocus href="https://www.amazon.com/Fast-Forward-Leadership-Fable-feedback/dp/1068480149/" target="_blank" rel="noopener">Paperback →</a>
+        <a class="secondary" href="https://www.amazon.com/Fast-Forward-Leadership-Fable-feedback-ebook/dp/B0G4FHDMD7/" target="_blank" rel="noopener">Kindle →</a>
+      </div>
     </div>
-    <button class="later" type="button" data-close>Maybe later</button>
+    <button class="later" type="button" data-close>Close</button>
   </div>
 </dialog>
 
@@ -221,22 +243,21 @@
   var err=document.getElementById('form-error');
   var btn=form.querySelector('button');
   var label=btn.textContent;
+  var pop=document.getElementById('pop');
 
-  function showDone(){
-    document.body.classList.add('is-done');
-    window.scrollTo({top:0,behavior:'smooth'});
-    setTimeout(openBookPop,700);
-  }
-  var pop=document.getElementById('bookpop');
-  function openBookPop(){
+  function openPop(){
     if(pop.open) return;
     if(typeof pop.showModal==='function'){pop.showModal();} else {pop.setAttribute('open','');}
   }
-  [].forEach.call(pop.querySelectorAll('[data-close]'),function(b){
-    b.addEventListener('click',function(){pop.close?pop.close():pop.removeAttribute('open');});
-  });
-  pop.addEventListener('click',function(e){ if(e.target===pop) pop.close(); }); // click backdrop to close
-  if(/[?&]subscribed=1/.test(location.search)) showDone();
+  function closePop(){ if(pop.close){pop.close();} else {pop.removeAttribute('open');} }
+  [].forEach.call(pop.querySelectorAll('[data-close]'),function(b){ b.addEventListener('click',closePop); });
+  pop.addEventListener('click',function(e){ if(e.target===pop) closePop(); }); // click outside to close
+
+  function done(){
+    document.body.classList.add('is-done');
+    openPop();
+  }
+  if(/[?&]subscribed=1/.test(location.search)) done();
 
   form.addEventListener('submit',function(e){
     e.preventDefault();
@@ -246,16 +267,16 @@
       err.textContent='Please enter a valid email address.';
       err.classList.add('show');form.email.focus();return;
     }
-    if(form.website.value){showDone();return;} // honeypot: bots fill the hidden field
+    if(form.website.value){done();return;} // honeypot: bots fill the hidden field
     btn.disabled=true;btn.textContent='Signing you up…';
     fetch('/.netlify/functions/subscribe',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({email:email,listId:LIST_ID})
-    }).then(function(r){return r.json().catch(function(){return {};}).then(function(d){return {ok:r.ok,d:d};});})
-      .then(function(res){
-        if(res.d.success){showDone();}
-        else{throw new Error(res.d.error||'Something went wrong.');}
+    }).then(function(r){return r.json().catch(function(){return {};});})
+      .then(function(d){
+        if(d.success){done();}
+        else{throw new Error(d.error||'Something went wrong.');}
       })
       .catch(function(e2){
         err.textContent=(e2&&e2.message)||'Something went wrong. Please try again.';

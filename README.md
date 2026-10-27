@@ -26,8 +26,7 @@ Drag-and-drop deploys can leave the function missing (404), so use GitHub if you
 3. Check the contact appears in the getfastforward list in SendFox.
 4. Make sure the SendFox automation for list 618152 is on (the thank-you text promises a "you're in" email).
 
-## Book image
-The book image is a placeholder. Put the image in `images/` (e.g. `images/book.png`). In `index.html`, find the
-`PLACEHOLDER` comment and replace the `<div class="book">…</div>` with:
-
-    <div class="book" style="background:none;border:0"><img src="images/book.png" alt="FAST Forward book"></div>
+## Images
+- `images/book-scene.webp`: the café scene from the book (cropped by the page to fit; change `object-position` on `.scene img` to move the crop)
+- `images/hare.png`: the running hare from the cover
+- `images/signature.png`, `images/atourbest-lab.webp`
