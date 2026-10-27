@@ -73,10 +73,8 @@
   .form-error{display:none;color:#B3123F;font-size:15px;line-height:1.4;text-align:center}
   .form-error.show{display:block}
   .fine{color:var(--muted);font-size:14px;line-height:1.5;text-align:center;margin-top:12px}
-  .proof{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px;
-    font-size:14px;line-height:1.4;color:var(--body);text-align:left}
-  .proof img{width:38px;flex:0 0 auto}
-  .proof strong{color:var(--ink);font-weight:600}
+  .proof{margin-top:18px;font-size:17px;font-weight:600;line-height:1.4;color:var(--ink);text-align:center}
+  .proof strong{color:var(--pink);font-weight:700;font-size:20px}
 
   /* Shown in place of the form after sign-up */
   .signed{display:none;margin-top:26px;padding:18px 20px;border-radius:10px;background:var(--tint);
@@ -108,9 +106,10 @@
   .l-microsoft{height:28px}.l-intuit{height:22px}.l-hsbc{height:30px}
   .l-equinix{height:44px}.l-netflix{height:28px}.l-nordea{height:24px}
 
-  footer{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:40px;padding:0 2px}
-  footer img{width:120px;height:auto}
-  footer p{color:#fff;font-size:11px;opacity:.9}
+  footer{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;margin-top:40px;padding:0 2px}
+  footer .copy{color:#fff;font-size:11px;opacity:.9;justify-self:start}
+  footer .sig{width:130px;height:auto;justify-self:center}
+  footer .hare{width:56px;height:auto;justify-self:end}
 
   /* Pop-up after sign-up */
   dialog.pop{
@@ -159,7 +158,8 @@
   @media (max-width:480px){
     body{padding:20px 12px}
     .pop .buy{flex-direction:column}
-    footer{flex-direction:column;gap:10px}
+    footer{grid-template-columns:1fr;justify-items:center;gap:10px}
+    footer .sig{order:1} footer .hare{order:2;justify-self:center} footer .copy{order:3;justify-self:center}
   }
 </style>
 </head>
@@ -192,7 +192,7 @@
           <strong>You’re in.</strong> Check your inbox for a “you’re in” email. Day 1 arrives tomorrow.
         </div>
 
-        <p class="proof"><img src="images/hare.png" alt=""><span><strong>500,000+ people</strong> have attended an experience based on Jason’s work.</span></p>
+        <p class="proof"><strong>500,000+ people</strong> have attended an experience based on Jason’s work.</p>
       </div>
 
       <div class="col-right">
@@ -215,7 +215,7 @@
   </div>
 
   <section class="clients" aria-labelledby="clients-title">
-    <h2 id="clients-title">Jason has worked with teams at:</h2>
+    <h2 id="clients-title">Jason works with the planet’s most ambitious companies, including:</h2>
     <ul class="logos">
       <li><img class="l-microsoft" src="images/logos/microsoft.png" alt="Microsoft"></li>
       <li><img class="l-intuit" src="images/logos/intuit.png" alt="Intuit"></li>
@@ -227,8 +227,9 @@
   </section>
 
   <footer>
-    <img src="images/signature-white.png" alt="Jason Moore">
-    <p>© Jason Moore. All rights reserved.</p>
+    <p class="copy">© Jason Moore. All rights reserved.</p>
+    <img class="sig" src="images/signature-white.png" alt="Jason Moore">
+    <img class="hare" src="images/hare.png" alt="">
   </footer>
 </main>
 
