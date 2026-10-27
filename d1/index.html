@@ -36,12 +36,6 @@
   /* Video */
   .video{position:relative;aspect-ratio:16/9;margin-top:24px;border-radius:12px;overflow:hidden;background:#1C1A1D}
   .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-  .video .placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
-    color:#fff;text-align:center;background:linear-gradient(135deg,#2a1520,#5a1030)}
-  .video .play{width:74px;height:74px;border-radius:50%;background:var(--pink);display:flex;align-items:center;justify-content:center;
-    box-shadow:0 10px 30px rgba(0,0,0,.35)}
-  .video .play::after{content:"";margin-left:6px;border-left:22px solid #fff;border-top:14px solid transparent;border-bottom:14px solid transparent}
-  .video .placeholder span{font-size:14px;opacity:.75}
   .length{font-size:14px;color:var(--muted);margin-top:10px}
 
   /* Lesson text */
@@ -103,9 +97,8 @@
       </div>
       <h1>The one thing nobody tells you about feedback</h1>
 
-      <!-- VIDEO: put the YouTube video ID in data-youtube (e.g. data-youtube="dQw4w9WgXcQ"). Leave empty to show the placeholder. -->
-      <div class="video" id="video" data-youtube="">
-        <div class="placeholder"><div class="play"></div><span>Video coming soon</span></div>
+      <div class="video">
+        <iframe src="https://livid.com/embed/qXC4ygHcd0cC" title="FAST Forward Mini Course Day 1" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
       </div>
       <p class="length">About 2 minutes</p>
 
@@ -150,14 +143,5 @@
   </footer>
 </main>
 
-<script>
-  // Swap the placeholder for the YouTube player when a video ID is set.
-  (function(){
-    var box=document.getElementById('video');
-    var id=(box.getAttribute('data-youtube')||'').trim();
-    if(!id) return;
-    box.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'?rel=0&modestbranding=1" title="Day 1 video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>';
-  })();
-</script>
 </body>
 </html>
