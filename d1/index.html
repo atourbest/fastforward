@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light only">
+<meta name="robots" content="noindex">
+<title>Day 1: The one thing nobody tells you about feedback · FAST Forward</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Work+Sans:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#E9185A; --pink-dark:#C4104A; --gold:#CFB75E;
+    --ink:#1C1A1D; --body:#2E2A30; --muted:#6E6870;
+    --line:rgba(0,0,0,.12); --tint:#FDF1F5;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:var(--pink);font-family:"Outfit",system-ui,sans-serif;color:var(--body);
+    letter-spacing:-0.02em;-webkit-font-smoothing:antialiased;padding:40px 16px;
+  }
+  img{display:block;max-width:100%}
+  .page{width:100%;max-width:820px;margin:0 auto}
+  .card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 24px 60px rgba(90,0,30,.25)}
+  .inner{padding:34px 44px 38px}
+
+  /* Progress */
+  .progress{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .kicker{color:var(--pink);font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+  .steps{list-style:none;display:flex;gap:6px}
+  .steps li{width:34px;height:6px;border-radius:3px;background:#F3D3DE}
+  .steps li.done{background:var(--pink)}
+  h1{color:var(--ink);font-weight:700;font-size:36px;line-height:1.08;letter-spacing:-0.03em;margin-top:12px}
+
+  /* Video */
+  .video{position:relative;aspect-ratio:16/9;margin-top:24px;border-radius:12px;overflow:hidden;background:#1C1A1D}
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .video .placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+    color:#fff;text-align:center;background:linear-gradient(135deg,#2a1520,#5a1030)}
+  .video .play{width:74px;height:74px;border-radius:50%;background:var(--pink);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .video .play::after{content:"";margin-left:6px;border-left:22px solid #fff;border-top:14px solid transparent;border-bottom:14px solid transparent}
+  .video .placeholder span{font-size:14px;opacity:.75}
+  .length{font-size:14px;color:var(--muted);margin-top:10px}
+
+  /* Lesson text */
+  .action{margin-top:26px;padding:20px 22px;border-radius:12px;background:var(--tint);border:1.5px solid rgba(233,24,90,.2)}
+  .label{display:flex;align-items:center;gap:8px;color:var(--pink);font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+  .label svg{width:18px;height:18px}
+  .action p{font-size:18px;line-height:1.5;color:var(--ink);margin-top:8px}
+  .action p.label{color:var(--pink);font-size:14px;margin-top:0}
+  .action q{font-weight:600;quotes:"“" "”"}
+  .block{margin-top:22px}
+  .block p{font-size:17px;line-height:1.55;margin-top:6px}
+  .label.plain{color:var(--muted)}
+  .signoff{margin-top:26px;font-size:17px}
+  .signoff img{width:140px;margin-top:6px}
+
+  /* Book CTA */
+  .book{display:flex;border-top:1px solid var(--line);background:#FFFBFC}
+  .book .pic{flex:0 0 300px;position:relative;min-height:260px}
+  .book .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:48% 70%}
+  .book .copy{flex:1;padding:28px 34px 30px}
+  .book h2{color:var(--ink);font-weight:700;font-size:26px;line-height:1.15}
+  .book h2 em{font-style:normal;color:var(--pink)}
+  .book p{font-size:16.5px;line-height:1.55;margin-top:10px}
+  .buy{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+  .buy a{flex:1 1 150px;display:block;text-align:center;height:50px;line-height:50px;border-radius:8px;text-decoration:none;
+    font-family:"Work Sans",system-ui,sans-serif;font-weight:700;font-size:16px;letter-spacing:0;transition:transform .15s ease}
+  .buy a:hover{transform:translateY(-1px)}
+  .buy .primary{background:var(--pink);color:#fff;box-shadow:0 8px 20px rgba(233,24,90,.28)}
+  .buy .secondary{border:2.5px solid var(--pink);color:var(--pink);line-height:45px}
+
+  footer{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;margin-top:36px;padding:0 2px}
+  footer .hare{width:56px;justify-self:start}
+  footer .sig{width:130px;justify-self:center}
+  footer .copy{color:#fff;font-size:11px;opacity:.9;justify-self:end}
+
+  @media (max-width:700px){
+    body{padding:20px 12px}
+    .inner{padding:26px 22px 30px}
+    h1{font-size:29px}
+    .book{flex-direction:column}
+    .book .pic{flex:none;min-height:0;aspect-ratio:16/10}
+    .book .copy{padding:24px 22px 26px}
+    .buy a{flex-basis:100%}
+    footer{grid-template-columns:1fr;justify-items:center;gap:10px}
+    footer .hare,footer .copy{justify-self:center}
+  }
+</style>
+</head>
+<body>
+
+<main class="page">
+  <article class="card">
+    <div class="inner">
+      <div class="progress">
+        <p class="kicker">Day 1 of 5 · FAST Forward challenge</p>
+        <ol class="steps" aria-label="Day 1 of 5">
+          <li class="done"></li><li></li><li></li><li></li><li></li>
+        </ol>
+      </div>
+      <h1>The one thing nobody tells you about feedback</h1>
+
+      <!-- VIDEO: put the YouTube video ID in data-youtube (e.g. data-youtube="dQw4w9WgXcQ"). Leave empty to show the placeholder. -->
+      <div class="video" id="video" data-youtube="">
+        <div class="placeholder"><div class="play"></div><span>Video coming soon</span></div>
+      </div>
+      <p class="length">About 2 minutes</p>
+
+      <section class="action">
+        <p class="label"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5.5v13l10.5-6.5z"/></svg>Your action</p>
+        <p>Ask 1 person for advice today. Pick someone you trust. Ask them: <q>What’s one thing I could do to be better at [something specific]?</q> That’s it. One person. One question.</p>
+      </section>
+
+      <section class="block">
+        <p class="label plain">Go deeper</p>
+        <p>This idea is explored in Part II of <em>Fast Forward</em> (Chapters 1–5), where we dig into the neuroscience of why feedback fails and what works instead.</p>
+      </section>
+
+      <section class="block">
+        <p class="label plain">Coming tomorrow</p>
+        <p>The simple structure behind every great piece of advice — and why most feedback misses it completely.</p>
+      </section>
+
+      <div class="signoff">
+        <p>Talk soon,</p>
+        <img src="../images/signature.png" alt="Jason">
+      </div>
+    </div>
+
+    <aside class="book" aria-labelledby="book-title">
+      <div class="pic"><img src="../images/book-scene.webp" alt="A character from FAST Forward handing over the book in a café"></div>
+      <div class="copy">
+        <h2 id="book-title">Want the <em>whole story?</em></h2>
+        <p>Today’s lesson comes from a moment in <em>Fast Forward</em> where a chance meeting over coffee changes Alex’s life. If you’re curious about the brain science behind why feedback fails, the book goes deep.</p>
+        <div class="buy">
+          <a class="primary" href="https://www.amazon.com/Fast-Forward-Leadership-Fable-feedback/dp/1068480149/" target="_blank" rel="noopener">Get the paperback →</a>
+          <a class="secondary" href="https://www.amazon.com/Fast-Forward-Leadership-Fable-feedback-ebook/dp/B0G4FHDMD7/" target="_blank" rel="noopener">Get it on Kindle →</a>
+        </div>
+      </div>
+    </aside>
+  </article>
+
+  <footer>
+    <img class="hare" src="../images/hare.png" alt="">
+    <img class="sig" src="../images/signature-white.png" alt="Jason Moore">
+    <p class="copy">© Jason Moore. All rights reserved.</p>
+  </footer>
+</main>
+
+<script>
+  // Swap the placeholder for the YouTube player when a video ID is set.
+  (function(){
+    var box=document.getElementById('video');
+    var id=(box.getAttribute('data-youtube')||'').trim();
+    if(!id) return;
+    box.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'?rel=0&modestbranding=1" title="Day 1 video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>';
+  })();
+</script>
+</body>
+</html>
