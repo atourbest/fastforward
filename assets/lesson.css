@@ -87,3 +87,24 @@ footer .copy{color:#fff;font-size:11px;opacity:.9;justify-self:end}
   footer{grid-template-columns:1fr;justify-items:center;gap:10px}
   footer .hare,footer .copy{justify-self:center}
 }
+
+/* Day 5 wrap-up */
+.questions.etc1 li::before{content:none}
+.questions.etc1 li{padding-left:16px}
+.wrap{margin-top:30px;padding-top:24px;border-top:1px solid var(--line)}
+.wrap h2{color:var(--ink);font-weight:700;font-size:26px;line-height:1.15}
+.wrap p{font-size:18px;line-height:1.5;margin-top:8px}
+.share{margin-top:24px}
+.share p{font-size:17px;line-height:1.55;margin-top:6px}
+.sharebox{display:flex;align-items:center;gap:10px;margin-top:12px;padding:8px 8px 8px 16px;border:1.5px solid rgba(233,24,90,.25);border-radius:10px;background:var(--tint)}
+.sharebox a{flex:1;min-width:0;color:var(--pink);font-weight:600;font-size:17px;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sharebox button{flex:0 0 auto;height:40px;padding:0 16px;border:0;border-radius:7px;background:var(--pink);color:#fff;
+  font-family:"Work Sans",system-ui,sans-serif;font-weight:700;font-size:14.5px;cursor:pointer}
+.sharebox button:hover{background:var(--pink-dark)}
+.thanks{margin-top:24px;font-size:18px;line-height:1.5;font-weight:600;color:var(--ink)}
+.signoff .pps{margin-top:16px;font-size:15px;line-height:1.5;color:var(--muted)}
+@media (max-width:480px){
+  .sharebox{flex-wrap:wrap;padding:12px}
+  .sharebox a{flex-basis:100%;white-space:normal;font-size:16px}
+  .sharebox button{width:100%}
+}
