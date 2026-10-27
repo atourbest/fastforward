@@ -29,4 +29,5 @@ Drag-and-drop deploys can leave the function missing (404), so use GitHub if you
 ## Images
 - `images/book-scene.webp`: the café scene from the book (cropped by the page to fit; change `object-position` on `.scene img` to move the crop)
 - `images/hare.png`: the running hare from the cover
-- `images/signature.png`, `images/atourbest-lab.webp`
+- `images/signature-white.png`: signature in the footer
+- `images/logos/`: white client logos (shown on the pink background)
