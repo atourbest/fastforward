@@ -101,6 +101,33 @@
   body.is-done .card-main{display:none}
   body.is-done .done{display:block}
 
+  /* Book pop-up (shown after sign-up) */
+  dialog.bookpop{
+    margin:auto;border:0;border-radius:16px;padding:0;max-width:420px;width:calc(100% - 32px);
+    box-shadow:0 30px 80px rgba(0,0,0,.35);overflow:visible;
+  }
+  dialog.bookpop::backdrop{background:rgba(40,0,15,.55)}
+  dialog.bookpop[open]{animation:pop .25s ease-out}
+  @keyframes pop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+  .bookpop .inner{padding:34px 30px 28px;text-align:center}
+  .bookpop .x{position:absolute;top:10px;right:12px;width:36px;height:36px;border:0;background:none;
+    font-size:26px;line-height:1;color:rgba(0,0,0,.45);cursor:pointer;border-radius:50%}
+  .bookpop .x:focus-visible{outline:2px solid var(--bg)}
+  .bookpop .x:hover{background:rgba(0,0,0,.06);transform:none;filter:none}
+  .bookpop .tag{color:var(--kicker);font-weight:500;font-size:15px}
+  .bookpop h2{color:var(--muted);font-weight:700;font-size:28px;line-height:1.1;margin:8px 0 12px}
+  .bookpop p{font-size:16.5px;line-height:1.55}
+  .bookpop .buy{display:flex;flex-direction:column;gap:10px;margin-top:22px}
+  .bookpop .buy a{
+    display:block;height:50px;line-height:50px;border-radius:8px;text-decoration:none;
+    font-family:"Work Sans",system-ui,sans-serif;font-weight:700;font-size:16.5px;letter-spacing:0;
+  }
+  .bookpop .buy a.primary{background:var(--bg);color:#fff}
+  .bookpop .buy a.secondary{border:3px solid var(--bg);color:var(--pink);line-height:44px}
+  .bookpop .later{margin-top:14px;background:none;border:0;height:auto;color:rgba(0,0,0,.5);
+    font-family:"Outfit",system-ui,sans-serif;font-weight:400;font-size:14.5px;text-decoration:underline;cursor:pointer}
+  .bookpop .later:hover{transform:none;filter:none;color:#000}
+
   footer{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:26px;padding:0 2px}
   footer img{width:132px;height:auto}
   footer p{font-family:"Open Sans",system-ui,sans-serif;color:#fff;font-size:10.83px}
@@ -173,6 +200,20 @@
   </footer>
 </main>
 
+<dialog class="bookpop" id="bookpop" aria-labelledby="bookpop-title">
+  <button class="x" type="button" data-close aria-label="Close">&times;</button>
+  <div class="inner">
+    <p class="tag">While you wait for Day 1</p>
+    <h2 id="bookpop-title">Want the whole story?</h2>
+    <p>The challenge gives you the method. The book shows it in action — through Alex, a leader who learns to stop giving feedback and start asking for advice.</p>
+    <div class="buy">
+      <a class="primary" autofocus href="https://www.amazon.com/Fast-Forward-Leadership-Fable-feedback/dp/1068480149/" target="_blank" rel="noopener">Get the paperback →</a>
+      <a class="secondary" href="https://www.amazon.com/Fast-Forward-Leadership-Fable-feedback-ebook/dp/B0G4FHDMD7/" target="_blank" rel="noopener">Get it on Kindle →</a>
+    </div>
+    <button class="later" type="button" data-close>Maybe later</button>
+  </div>
+</dialog>
+
 <script>
 (function(){
   var LIST_ID = 618152; // SendFox list: getfastforward
@@ -184,7 +225,17 @@
   function showDone(){
     document.body.classList.add('is-done');
     window.scrollTo({top:0,behavior:'smooth'});
+    setTimeout(openBookPop,700);
   }
+  var pop=document.getElementById('bookpop');
+  function openBookPop(){
+    if(pop.open) return;
+    if(typeof pop.showModal==='function'){pop.showModal();} else {pop.setAttribute('open','');}
+  }
+  [].forEach.call(pop.querySelectorAll('[data-close]'),function(b){
+    b.addEventListener('click',function(){pop.close?pop.close():pop.removeAttribute('open');});
+  });
+  pop.addEventListener('click',function(e){ if(e.target===pop) pop.close(); }); // click backdrop to close
   if(/[?&]subscribed=1/.test(location.search)) showDone();
 
   form.addEventListener('submit',function(e){
