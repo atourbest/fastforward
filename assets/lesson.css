@@ -108,3 +108,8 @@ footer .copy{color:#fff;font-size:11px;opacity:.9;justify-self:end}
   .sharebox a{flex-basis:100%;white-space:normal;font-size:16px}
   .sharebox button{width:100%}
 }
+
+/* Sign-off */
+.signoff .sig-jason{width:110px;margin-top:10px}
+.signoff .byline{margin-top:10px;font-size:15px;line-height:1.45;color:var(--muted)}
+.signoff .byline strong{color:var(--ink);font-weight:600;font-size:16px}
