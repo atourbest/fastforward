@@ -1,3 +1,10 @@
 [build]
   publish = "."
   command = ""
+
+# Serve the e-book with the right file type so phones offer to open it in a reading app
+[[headers]]
+  for = "/downloads/*.epub"
+  [headers.values]
+    Content-Type = "application/epub+zip"
+    Content-Disposition = "attachment; filename=\"FAST-Forward-Jason-Moore.epub\""
