@@ -39,6 +39,7 @@
   input::placeholder{color:#9a939c}
   input[type=text]:focus,input[type=email]:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 4px rgba(233,24,90,.14)}
   .consent{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.45;margin-top:2px;cursor:pointer}
+  .consent strong{color:var(--ink);font-weight:600}
   .consent input{flex:0 0 auto;width:20px;height:20px;margin-top:1px;accent-color:var(--pink);cursor:pointer}
   .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
   .btn{display:block;width:100%;height:54px;border:0;border-radius:8px;cursor:pointer;text-align:center;text-decoration:none;
@@ -96,7 +97,7 @@
         <input type="email" name="email" id="email" placeholder="Your email address" maxlength="128" autocomplete="email" required aria-label="Email address">
         <label class="consent">
           <input type="checkbox" name="consent" id="consent" required>
-          <span>Yes, send me emails from Jason. I’ll never share your details, and you can unsubscribe at any time.</span>
+          <span><strong>Yes, send me emails from Jason.</strong><br>We’ll never share your details. You can unsubscribe at any time.</span>
         </label>
         <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
         <button class="btn" type="submit">Send me the book</button>
