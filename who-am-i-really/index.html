@@ -111,7 +111,7 @@
           <a class="btn" href="../downloads/Who-Am-I-Really-Jason-Moore.epub" download>Download the Book</a>
         </div>
         <p class="note">It’s a workbook, so keep a notebook handy for the writing spaces. The book is an EPUB file. It opens in Apple Books, Google Play Books, Kobo and most e-reader apps. For a Kindle, use Amazon’s Send to Kindle.</p>
-        <p class="next">It works best with a buddy. <a href="mailto:?subject=Who%20Am%20I%20Really%3F%20Let%E2%80%99s%20do%20it%20together&amp;body=I%E2%80%99m%20working%20through%20this%20free%20workbook%20on%20personal%20brand%20and%20it%E2%80%99s%20better%20with%20a%20buddy.%20Want%20to%20do%20it%20with%20me%3F%20Get%20your%20copy%20here%3A%20https%3A%2F%2Fgetfastforward.com%2Fwho-am-i-really%2F">Invite someone to do it with you →</a></p>
+        <p class="next">It works best with a buddy. <a href="mailto:?subject=Who%20Am%20I%20Really%3F%20Let%E2%80%99s%20do%20it%20together&amp;body=I%E2%80%99m%20working%20through%20this%20free%20workbook%20on%20personal%20brand%20and%20it%E2%80%99s%20better%20with%20a%20buddy.%20Want%20to%20do%20it%20with%20me%3F%20Get%20your%20copy%20here%3A%20https%3A%2F%2Fgetfastforward.com%2Fwho-am-i-really%2F%3Fref%3Dbuddy">Invite someone to do it with you →</a></p>
       </div>
     </div>
   </div>
@@ -136,8 +136,10 @@
     if(name){ document.getElementById('who').textContent = ', ' + name; }
     document.body.classList.add('is-done');
   }
-  // Returning visitor on the same device: show the downloads again.
-  try { var saved = localStorage.getItem(KEY); if(saved !== null){ showDownloads(saved); } } catch(e){}
+  // Returning visitor on the same device: show the downloads again,
+  // unless they arrived from a buddy invite (?ref=buddy), which always shows the sign-up form.
+  var isInvite = /[?&]ref=buddy\b/.test(location.search);
+  try { var saved = localStorage.getItem(KEY); if(saved !== null && !isInvite){ showDownloads(saved); } } catch(e){}
 
   function fail(msg, field){
     err.textContent = msg; err.classList.add('show');
