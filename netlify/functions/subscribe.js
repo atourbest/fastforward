@@ -1,10 +1,14 @@
-// Adds a sign-up to a SendFox list. Used by the mini course page (/) and the free book page (/free-book).
+// Adds a sign-up to a SendFox list. Used by the mini course page (/) and the free book pages (/free-book, /who-am-i-really).
 // Needs the SENDFOX_API_KEY environment variable on Netlify.
 
 // Only these lists can be signed up to from this site.
+// Free book lists have a required consent box; the server checks it too.
+const CONSENT_LISTS = [686129, 686440];
+
 const ALLOWED_LISTS = [
   618152, // getfastforward (5-day mini course)
   686129, // FAST Forward free book
+  686440, // Who Am I Really free book
 ];
 
 exports.handler = async (event) => {
@@ -27,7 +31,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: JSON.stringify({ error: 'Unknown list' }) };
   }
   // The free book form has a required consent box; the server checks it too.
-  if (list === 686129 && consent !== true) {
+  if (CONSENT_LISTS.includes(list) && consent !== true) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Please tick the box to agree to receive emails.' }) };
   }
   const apiKey = process.env.SENDFOX_API_KEY;
