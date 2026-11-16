@@ -23,10 +23,14 @@ def day_key(n):
     return next(k for k in sections if k.startswith(f'Day {n} '))
 
 def build_prompt(n):
-    common = [sections['How to coach'], sections['Care and privacy'], sections['The buddy'], sections['The Brand File']]
-    brand = common[3].replace("Tomorrow, start a new chat with 'Start Day N' and paste it in.",
-                              "Tomorrow, open the next day's prompt from Jason's email, paste it into a new chat, then paste this in.")
-    common[3] = brand
+    # The skill saves progress to Claude's memory. A pasted prompt can't rely on that, so prompts always use the Brand File.
+    saving = (
+        "## Saving progress\n\n"
+        "Each day is a new chat, so my answers need to carry over. Whenever a day says \"Save progress\" (or if I stop early), "
+        "write my updated Brand File, using the template below, in a single code block so it's easy to copy. Then tell me: "
+        "\"Save this somewhere safe. Tomorrow, open the next day's prompt from Jason's email, paste it into a new chat, then paste this in.\" "
+        "On Day 5, also give me my finished story and introduction to keep.")
+    common = [sections['How to coach'], sections['Care and privacy'], sections['The buddy'], saving, sections['The Brand File']]
     if n == 1:
         start = 'Start now: welcome me and begin Day 1 with the first step. Ask one question at a time.'
     else:
@@ -153,7 +157,7 @@ def video(title):
 
 def day_page(n, d):
     prompt = html.escape(build_prompt(n), quote=False)
-    paste = '' if n == 1 else ' and paste in your Brand File'
+    paste = ''
     leads = ''.join(f'      <p class="lead">{p}</p>\n' for p in d['lead'])
     out = HEAD.format(title=f'Day {n}: {d["title"]}')
     out += progress(n, f'Who Am I Really? · Day {n} of 5')
@@ -165,7 +169,7 @@ def day_page(n, d):
 
         <div class="option">
           <h3>Using the Claude skill?</h3>
-          <p>Start a new chat, type <span class="cmd">Start Day {n}</span>{paste}. That’s it.</p>
+          <p>Start a new chat and type <span class="cmd">Start Day {n}</span>. That’s it. {'Your coach saves your answers to Claude’s memory as you go.' if n == 1 else 'Your coach picks up where you left off from Claude’s memory.'}</p>
         </div>
 
         <div class="option">
@@ -176,7 +180,7 @@ def day_page(n, d):
             <div class="bar"><span>Day {n} prompt</span><button class="btn" type="button" data-copy="prompt">Copy the prompt</button></div>
           </div>
         </div>
-        <p class="note">At the end, your coach will give you your Brand File. Copy it and save it somewhere safe.{' You’ll need it tomorrow.' if n < 5 else ' It now holds your story.'}</p>
+        <p class="note">{'Using the prompt? At the end, your coach gives you a Brand File: a short summary of your answers. Copy it and save it somewhere safe. You’ll paste it in tomorrow.' if n < 5 else 'At the end, your coach gives you your finished story and introduction. Copy them and keep them somewhere safe.'}</p>
       </section>
 
       <section class="block">
@@ -211,7 +215,7 @@ def bonus_page():
         <h2>About 20 minutes with your AI coach</h2>
         <div class="option">
           <h3>Using the Claude skill?</h3>
-          <p>Start a new chat, type <span class="cmd">Start my origin story</span> and paste in your Brand File. [PLACEHOLDER: confirm once added to the skill.]</p>
+          <p>Start a new chat and type <span class="cmd">Start my origin story</span>. [PLACEHOLDER: confirm once added to the skill.]</p>
         </div>
         <div class="option">
           <h3>Using any other AI?</h3>
@@ -244,6 +248,7 @@ def skill_page():
             <li>Go to <strong>Settings › Capabilities</strong> and turn on <strong>code execution</strong>.</li>
             <li>Go to <strong>Customize › Skills</strong>, click <strong>+</strong>, then <strong>Create skill › Upload a skill</strong>.</li>
             <li>Upload the file you downloaded (don’t unzip it) and switch the skill on.</li>
+            <li>Optional but recommended: create a project called <strong>Who Am I Really?</strong> and do each day’s session as a new chat inside it. That keeps your answers together and separate from everything else.</li>
             <li>Start a new chat and type <span class="cmd">Start Day 1</span></li>
           </ol>
         </div>
@@ -259,8 +264,10 @@ def skill_page():
       </section>
 
       <section class="block">
-        <p class="label plain">Your Brand File</p>
-        <p>At the end of each day, your coach writes a short summary of your answers. That’s your Brand File. Save it somewhere safe: a note on your phone, a document, an email to yourself. The next day, paste it in and your coach picks up where you left off.</p>
+        <p class="label plain">How your coach remembers</p>
+        <p><strong>Using the Claude skill?</strong> Your coach saves a short summary of your answers to Claude’s memory at the end of each day. The next day, just type <span class="cmd">Start Day 2</span> and it picks up where you left off. You can ask Claude to forget it at any time. If memory is turned off in your account (some work accounts do this), your coach gives you a Brand File to copy instead.</p>
+        <p><strong>Using the prompts?</strong> At the end of each day, your coach gives you a Brand File: a short summary of your answers. Save it somewhere safe: a note on your phone, a document, an email to yourself. The next day, paste it in and your coach picks up where you left off.</p>
+        <p>On Day 5, either way, you get your finished story and introduction to keep.</p>
       </section>
 
       <section class="block">
