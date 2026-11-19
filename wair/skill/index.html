@@ -21,43 +21,110 @@
         <ol class="steps" aria-label="Who Am I Really? · Set-up"><li></li><li></li><li></li><li></li><li></li></ol>
       </div>
       <h1>Set up your AI coach</h1>
-      <p class="lead">Your coach knows the whole course. It asks one question at a time, notices patterns in your answers, and helps you draft your story in your own words. Pick the option that suits you.</p>
+      <p class="lead">Your coach lives in one project in the AI assistant you already use. Set it up once, in about three minutes. After that, every new chat in the project is your coach, and it knows the whole course.</p>
+      <p class="lead">It asks one question at a time, notices patterns in your answers, and helps you draft your story in your own words.</p>
 
       <section class="session">
-        <p class="label"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5.5v13l10.5-6.5z"/></svg>Option A: the coaching skill for Claude</p>
-        <h2>About 5 minutes to set up</h2>
-        <p style="margin-top:16px"><a class="btn big" href="../downloads/who-am-i-really-coach.zip" download>Download the coach</a></p>
+        <p class="label"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5.5v13l10.5-6.5z"/></svg>Step 1: get your two pieces</p>
+        <h2>The coaching file and the project instructions</h2>
         <div class="option">
-          <h3>Then, in Claude:</h3>
-          <ol style="margin:8px 0 0 22px;display:grid;gap:6px;font-size:16.5px;line-height:1.5">
-            <li>Go to <strong>Settings › Capabilities</strong> and turn on <strong>code execution</strong>.</li>
-            <li>Go to <strong>Customize › Skills</strong>, click <strong>+</strong>, then <strong>Create skill › Upload a skill</strong>.</li>
-            <li>Upload the file you downloaded (don’t unzip it) and switch the skill on.</li>
-            <li>Optional but recommended: create a project called <strong>Who Am I Really?</strong> and do each day’s session as a new chat inside it. That keeps your answers together and separate from everything else.</li>
-            <li>Start a new chat and type <span class="cmd">Start Day 1</span></li>
+          <h3>The coaching file</h3>
+          <p>This is everything your coach needs to know about the course.</p>
+          <p style="margin-top:12px"><a class="btn big" href="../downloads/who-am-i-really-coach.md" download>Download the coaching file</a></p>
+        </div>
+        <div class="option">
+          <h3>The project instructions</h3>
+          <p>You’ll paste this short text into your project in Step 2.</p>
+          <div class="prompt">
+            <pre id="instructions">You are my coach for Jason Moore's courses, Who Am I Really? and Career in Motion. Follow the coaching files in this project exactly, as your instructions. Read the whole relevant file before you reply.
+
+- "Start Day 1" to "Start Day 5", "Start my origin story", or anything about my personal brand: follow the Who Am I Really? file.
+- "Start Career", "Start Career Day 1" to "Day 5", "Career check-in", or any career question: follow the Career in Motion file, if it's in this project.
+- If I just say hello, explain the course(s) in this project in three sentences and ask where I'd like to start.
+
+Ask one question at a time. Use British spelling.
+
+© 2020–2026 Jason Moore. All rights reserved. Licensed for the purchaser's personal use only.</pre>
+            <div class="bar"><span>Project instructions</span><button class="btn" type="button" data-copy="instructions">Copy the instructions</button></div>
+          </div>
+        </div>
+        <p class="note">The coaching file is © Jason Moore and licensed for your personal use. Please don’t share or copy it.</p>
+      </section>
+
+      <section class="session">
+        <p class="label"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5.5v13l10.5-6.5z"/></svg>Step 2: create your project</p>
+        <h2>Pick the AI you already use</h2>
+        <p class="note">Menu and button names change from time to time, so yours may look slightly different.</p>
+        <div class="option">
+          <h3>Claude (recommended)</h3>
+          <ol class="steps-list">
+            <li>Open <strong>Projects</strong> and create a new project called <strong>Who Am I Really?</strong></li>
+            <li>Open the project’s <strong>instructions</strong> and paste in the project instructions.</li>
+            <li>Add the coaching file to the project’s <strong>files</strong>.</li>
+            <li>Start a new chat inside the project and type <span class="cmd">Start Day 1</span></li>
           </ol>
         </div>
         <div class="option">
-          <h3>Using ChatGPT?</h3>
-          <p>[PLACEHOLDER: ChatGPT steps, once tested.]</p>
+          <h3>ChatGPT</h3>
+          <ol class="steps-list">
+            <li>Create a new <strong>project</strong> (or a custom GPT, if your plan allows it) called <strong>Who Am I Really?</strong></li>
+            <li>Paste the project instructions into the project’s <strong>instructions</strong>.</li>
+            <li>Add the coaching file to the project’s <strong>files</strong>.</li>
+            <li>Start a new chat in the project and type <span class="cmd">Start Day 1</span></li>
+          </ol>
+        </div>
+        <div class="option">
+          <h3>Gemini</h3>
+          <ol class="steps-list">
+            <li>Create a new <strong>Gem</strong> called <strong>Who Am I Really?</strong></li>
+            <li>Paste the project instructions into the Gem’s <strong>instructions</strong>.</li>
+            <li>Add the coaching file to the Gem’s <strong>knowledge</strong>.</li>
+            <li>Start a chat with the Gem and type <span class="cmd">Start Day 1</span></li>
+          </ol>
         </div>
       </section>
 
       <section class="block">
-        <p class="label plain">Option B: no set-up</p>
-        <p>Each day’s email links to a page with a prompt. Copy it, paste it into the AI tool you already use (Claude, ChatGPT, Gemini or Copilot), and the coaching starts. <a href="../day-1/">See the Day 1 page →</a></p>
+        <p class="label plain">Using your coach</p>
+        <p>Open a new chat in your project for each session, then type:</p>
+        <ul class="commands">
+          <li><span class="cmd">Start Day 1</span> to <span class="cmd">Start Day 5</span> to work through the course, one day at a time</li>
+          <li><span class="cmd">Start my origin story</span> for the bonus chapter</li>
+          <li>Or just ask for help with your story in your own words</li>
+        </ul>
       </section>
 
       <section class="block">
         <p class="label plain">How your coach remembers</p>
-        <p><strong>Using the Claude skill?</strong> Your coach saves a short summary of your answers to Claude’s memory at the end of each day. The next day, just type <span class="cmd">Start Day 2</span> and it picks up where you left off. You can ask Claude to forget it at any time. If memory is turned off in your account (some work accounts do this), your coach gives you a Brand File to copy instead.</p>
-        <p><strong>Using the prompts?</strong> At the end of each day, your coach gives you a Brand File: a short summary of your answers. Save it somewhere safe: a note on your phone, a document, an email to yourself. The next day, paste it in and your coach picks up where you left off.</p>
+        <p>If your AI has memory turned on, your coach saves a short summary of your answers at the end of each day, and picks up where you left off in the next chat. You can ask it to forget at any time.</p>
+        <p>If memory is off (some work accounts do this), your coach gives you a Brand File instead: a short summary of your answers. Save it somewhere safe and paste it in next time.</p>
         <p>On Day 5, either way, you get your finished story and introduction to keep.</p>
+      </section>
+
+      <section class="block">
+        <p class="label plain">Rather not set anything up?</p>
+        <p>Each day’s email links to a page with a prompt. Copy it, paste it into the AI tool you already use, and the coaching starts. <a href="../day-1/">See the Day 1 page →</a></p>
       </section>
 
       <section class="block">
         <p class="label plain">A note on privacy</p>
         <p>You’ll be talking about your values, your strengths and some of the moments that shaped you. Share only what you’re comfortable with. If you use AI at work, think about using a personal account for this instead.</p>
+      </section>
+
+      <!-- PLACEHOLDER: Career in Motion purchase page link is CIM_URL in build_pages.py -->
+      <section class="cim" id="career-in-motion">
+        <p class="label">What’s next: Career in Motion</p>
+        <h2>Add <em>Career in Motion</em> to the same project</h2>
+        <p><em>Career in Motion</em> is my 5-day companion course. It takes everything you’ve uncovered here, your strengths, values and story, and turns it into a career plan.</p>
+        <ul>
+          <li>See where your time really goes, and whether it matches your story</li>
+          <li>Hear what people are already telling you</li>
+          <li>Choose a direction and the skills you’ll need next</li>
+          <li>Find the projects and people that build the path</li>
+          <li>Leave with a one-page plan and your next career conversation, practised</li>
+        </ul>
+        <p>It adds one file to the project you already have. Same coach, same Brand File, nothing new to learn.</p>
+        <a class="btn big" href="#career-in-motion">Get Career in Motion →</a>
       </section>
 
       <div class="signoff">
@@ -84,5 +151,23 @@
   </footer>
 </main>
 
+<script>
+document.querySelectorAll('[data-copy]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var text = document.getElementById(btn.getAttribute('data-copy')).textContent;
+    var label = btn.textContent;
+    function done(){ btn.textContent = 'Copied ✓'; setTimeout(function(){ btn.textContent = label; }, 2000); }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else { fallback(); }
+    function fallback(){
+      var t = document.createElement('textarea'); t.value = text; t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); done(); } catch(e) { btn.textContent = 'Select the text and copy it'; }
+      document.body.removeChild(t);
+    }
+  });
+});
+</script>
 </body>
 </html>

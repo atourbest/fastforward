@@ -50,6 +50,7 @@ h1{color:var(--ink);font-weight:700;font-size:36px;line-height:1.08;letter-spaci
 .option{margin-top:18px}
 .option h3{color:var(--ink);font-size:17px;font-weight:700}
 .option p{font-size:16.5px;line-height:1.5;margin-top:4px}
+.option a{color:var(--accent);font-weight:600}
 .cmd{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;background:#fff;border:1px solid var(--line);border-radius:6px;padding:1px 8px;color:var(--ink);letter-spacing:0}
 .prompt{position:relative;margin-top:12px;border:1.5px solid rgba(194,74,38,.25);border-radius:10px;background:#fff}
 .prompt pre{max-height:230px;overflow:auto;padding:16px 18px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;line-height:1.55;
@@ -78,6 +79,20 @@ h1{color:var(--ink);font-weight:700;font-size:36px;line-height:1.08;letter-spaci
 .book h2 em{font-style:normal;color:var(--accent)}
 .book p{font-size:16.5px;line-height:1.55;margin-top:10px}
 .book .btn{margin-top:16px}
+
+/* Career in Motion call to action */
+.cim{margin-top:28px;padding:24px 26px 26px;border-radius:12px;background:var(--ink);color:#fff}
+.cim .label{color:var(--gold)}
+.cim h2{color:#fff;font-weight:700;font-size:24px;line-height:1.2;margin-top:6px}
+.cim h2 em{font-style:normal;color:var(--orange)}
+.cim p{font-size:16.5px;line-height:1.55;margin-top:10px;color:rgba(255,255,255,.88)}
+.cim ul{margin:10px 0 0 22px;display:grid;gap:4px;font-size:16px;line-height:1.5;color:rgba(255,255,255,.88)}
+.cim .btn{margin-top:18px}
+
+/* Set-up steps and commands */
+.steps-list{margin:8px 0 0 22px;display:grid;gap:6px;font-size:16.5px;line-height:1.5}
+.commands{list-style:none;margin-top:10px;display:grid;gap:8px}
+.commands li{font-size:16.5px;line-height:1.5}
 
 footer{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;margin-top:36px;padding:0 2px}
 footer .fox{width:46px;justify-self:start}

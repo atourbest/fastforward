@@ -1,36 +1,54 @@
 """Builds the Who Am I Really? course pages (/wair/day-1/ ... /wair/day-5/, /wair/bonus/, /wair/skill/).
 
-The copy-and-paste prompts are generated from the coaching skill (SKILL.md), so the prompts and
-the skill always match. Re-run after changing the skill:
-    python3 wair/build_pages.py path/to/who-am-i-really-coach/SKILL.md
+The coach lives in one AI project (a Claude Project, ChatGPT project or Gemini Gem) that holds the project
+instructions and the coaching file. The copy-and-paste prompts on the day pages are generated from that same
+coaching file, so the prompts and the project coach always match. Re-run after changing the coaching file:
+    python3 wair/build_pages.py            (defaults to wair/downloads/who-am-i-really-coach.md)
+    python3 wair/build_pages.py path/to/who-am-i-really-coach.md
+
+/wair/skill/ keeps its old address (emails link to it) but is now the project set-up page.
 """
 import html, os, re, sys
 
-SKILL = sys.argv[1]
 HERE = os.path.dirname(os.path.abspath(__file__))
-SKILL_ZIP = 'who-am-i-really-coach.zip'
+COACH_FILE = 'who-am-i-really-coach.md'
+INSTRUCTIONS_FILE = 'project-instructions.txt'
+SOURCE = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, 'downloads', COACH_FILE)
 
-src = open(SKILL, encoding='utf-8').read()
-body = src.split('---', 2)[2]
+# PLACEHOLDER: replace with the Career in Motion purchase page URL when it exists.
+CIM_URL = '#career-in-motion'
+
+src = open(SOURCE, encoding='utf-8').read()
+# The coaching file is: copyright notice, ---, instructions, ---, closing copyright line.
+parts = src.split('\n---\n')
+notice, body = parts[0], '\n---\n'.join(parts[1:-1])
 sections = {}
 for part in re.split(r'\n(?=## )', body):
     m = re.match(r'## (.+)\n', part)
     if m:
         sections[m.group(1).strip()] = part.strip()
 intro = re.search(r'^The idea behind it.*$', body, re.M).group(0).strip()  # Jason's framing of the course
+instructions = open(os.path.join(HERE, 'downloads', INSTRUCTIONS_FILE), encoding='utf-8').read().strip()
+
+PROMPT_COPYRIGHT = ('© 2020–2026 Jason Moore. All rights reserved. This prompt is licensed for your personal use only. '
+                    'Please don\'t copy, share or adapt it.')
 
 def day_key(n):
     return next(k for k in sections if k.startswith(f'Day {n} '))
 
+SAVING = (
+    "## Saving progress\n\n"
+    "Each chat is separate, so my answers need to carry over. Whenever a day says \"Save progress\" (or if I stop early), "
+    "write my updated Brand File, using the template below, in a single code block so it's easy to copy. Then tell me: "
+    "\"Save this somewhere safe. Next time, open the next prompt from Jason's email, paste it into a new chat, then paste this in.\" "
+    "On Day 5, also give me my finished story and introduction to keep.")
+
+def common():
+    # A pasted prompt can't rely on memory or on a project, so prompts always use the Brand File.
+    return [sections['How to coach'], sections['Care and privacy'], sections['Protecting the method'],
+            sections['The buddy'], SAVING, sections['The Brand File']]
+
 def build_prompt(n):
-    # The skill saves progress to Claude's memory. A pasted prompt can't rely on that, so prompts always use the Brand File.
-    saving = (
-        "## Saving progress\n\n"
-        "Each day is a new chat, so my answers need to carry over. Whenever a day says \"Save progress\" (or if I stop early), "
-        "write my updated Brand File, using the template below, in a single code block so it's easy to copy. Then tell me: "
-        "\"Save this somewhere safe. Tomorrow, open the next day's prompt from Jason's email, paste it into a new chat, then paste this in.\" "
-        "On Day 5, also give me my finished story and introduction to keep.")
-    common = [sections['How to coach'], sections['Care and privacy'], sections['The buddy'], saving, sections['The Brand File']]
     if n == 1:
         start = 'Start now: welcome me and begin Day 1 with the first step. Ask one question at a time.'
     else:
@@ -39,7 +57,15 @@ def build_prompt(n):
     return '\n\n'.join([
         f'You are my coach for Day {n} of Jason Moore\'s 5-day course "Who Am I Really? Uncover your personal brand story". '
         'Follow these instructions for the whole conversation.',
-        intro, *common, sections[day_key(n)], start])
+        intro, *common(), sections[day_key(n)], start, PROMPT_COPYRIGHT])
+
+def build_bonus_prompt():
+    start = ('Start now: ask if I have a Brand File from the 5-day course and, if so, to paste it in (it\'s optional). '
+             'Then begin with the first step: finding the limiting belief. Ask one question at a time.')
+    return '\n\n'.join([
+        'You are my coach for the bonus chapter of Jason Moore\'s course "Who Am I Really?": my origin story. '
+        'Follow these instructions for the whole conversation.',
+        intro, *common(), sections['Bonus: your origin story'], start, PROMPT_COPYRIGHT])
 
 DAYS = {
     1: dict(title='You already have a brand', mins='10 to 20 minutes',
@@ -66,7 +92,7 @@ DAYS = {
             lead=['People make judgements about us in a fraction of a second. Then they look for evidence that they were right. A clear introduction helps you shape that first impression.',
                   'Today you’ll turn your story into an introduction that takes less than 15 seconds: <strong>I</strong> (headline)… <strong>by</strong> (actions)… <strong>for example</strong>… Here’s mine: <em>I help people do their best work by creating tools, sharing stories and connecting ideas. For example, I wrote a book and designed an app that helps people uncover and share their personal brand.</em>'],
             buddy='Try your introduction on one person this week. Then hit reply to any of my emails and tell me how it went.',
-            next='One more thing: a bonus chapter on your origin story.'),
+            next='One more thing: a bonus chapter on your origin story. And when you’re ready, Career in Motion (below).'),
 }
 
 HEAD = '''<!DOCTYPE html>
@@ -155,9 +181,38 @@ def video(title):
       <p class="length">Under 3 minutes</p>
 '''
 
+
+def project_option(cmd, first=False):
+    remember = ('Your coach saves your answers as you go, so you can pick up in any new chat in the project.' if first
+                else 'Your coach picks up where you left off.')
+    return f'''        <div class="option">
+          <h3>In your Who Am I Really? project</h3>
+          <p>Open a new chat inside your project and type <span class="cmd">{cmd}</span>. {remember} Not set up yet? <a href="../skill/">Set up your project (about 3 minutes) →</a></p>
+        </div>
+'''
+
+def cim_cta(heading='You know who you are. <em>Now what?</em>'):
+    # PLACEHOLDER link: set CIM_URL at the top of this file to the Career in Motion purchase page.
+    return f'''      <!-- PLACEHOLDER: Career in Motion purchase page link is CIM_URL in build_pages.py -->
+      <section class="cim" id="career-in-motion">
+        <p class="label">What’s next: Career in Motion</p>
+        <h2>{heading}</h2>
+        <p><em>Career in Motion</em> is my 5-day companion course. It takes everything you’ve uncovered here, your strengths, values and story, and turns it into a career plan.</p>
+        <ul>
+          <li>See where your time really goes, and whether it matches your story</li>
+          <li>Hear what people are already telling you</li>
+          <li>Choose a direction and the skills you’ll need next</li>
+          <li>Find the projects and people that build the path</li>
+          <li>Leave with a one-page plan and your next career conversation, practised</li>
+        </ul>
+        <p>It adds one file to the project you already have. Same coach, same Brand File, nothing new to learn.</p>
+        <a class="btn big" href="{CIM_URL}">Get Career in Motion →</a>
+      </section>
+
+'''
+
 def day_page(n, d):
     prompt = html.escape(build_prompt(n), quote=False)
-    paste = ''
     leads = ''.join(f'      <p class="lead">{p}</p>\n' for p in d['lead'])
     out = HEAD.format(title=f'Day {n}: {d["title"]}')
     out += progress(n, f'Who Am I Really? · Day {n} of 5')
@@ -167,13 +222,9 @@ def day_page(n, d):
         <p class="label">{PLAY}Today’s coaching session</p>
         <h2>About {d["mins"]} with your AI coach</h2>
 
+{project_option(f"Start Day {n}", first=(n == 1))}
         <div class="option">
-          <h3>Using the Claude skill?</h3>
-          <p>Start a new chat and type <span class="cmd">Start Day {n}</span>. That’s it. {'Your coach saves your answers to Claude’s memory as you go.' if n == 1 else 'Your coach picks up where you left off from Claude’s memory.'}</p>
-        </div>
-
-        <div class="option">
-          <h3>Using any other AI?</h3>
+          <h3>No project? Use today’s prompt</h3>
           <p>Copy this prompt and paste it into a new chat in Claude, ChatGPT, Gemini or Copilot.{' Then paste in your Brand File when your coach asks for it.' if n > 1 else ''}</p>
           <div class="prompt">
             <pre id="prompt">{prompt}</pre>
@@ -194,80 +245,129 @@ def day_page(n, d):
       </section>
 
 '''
+    if n == 5:
+        out += cim_cta()
     out += FOOT.format(script=COPY_JS)
     return out
 
 def bonus_page():
+    prompt = html.escape(build_bonus_prompt(), quote=False)
     out = HEAD.format(title='Your origin story')
     out += progress(5, 'Who Am I Really? · Bonus chapter')
     out += '      <h1>Your origin story</h1>\n\n' + video('Your origin story') + '\n'
     out += '''      <p class="lead">Your personal brand story says who you are. Your origin story says how you came to know what you know. It’s the story to tell when you teach, lead, pitch or present, and you want people to trust what comes next.</p>
-      <p class="lead">[PLACEHOLDER: one or two sentences introducing the 8 steps.]</p>
+      <p class="lead">It starts with one rule: begin with a limiting belief you once held and changed, that other people still hold. Then you shape it in eight steps: <strong>Set-up</strong>, <strong>Big want</strong>, <strong>The wall</strong>, <strong>Aha moment</strong>, <strong>Steps</strong>, <strong>Reality</strong>, <strong>Result</strong> and <strong>Transformation</strong>. Told out loud, it takes under three minutes.</p>
 
       <section class="block">
         <p class="label plain">The bonus chapter</p>
-        <p>[PLACEHOLDER: short description of what’s in the PDF.]</p>
+        <p>The chapter walks through all eight steps, with my own origin story as the example.</p>
         <p style="margin-top:14px"><span class="btn big disabled" aria-disabled="true">PDF coming soon</span></p>
       </section>
 
       <section class="session">
         <p class="label">''' + PLAY + '''Work on it with your coach</p>
         <h2>About 20 minutes with your AI coach</h2>
-        <div class="option">
-          <h3>Using the Claude skill?</h3>
-          <p>Start a new chat and type <span class="cmd">Start my origin story</span>. [PLACEHOLDER: confirm once added to the skill.]</p>
+''' + project_option('Start my origin story') + f'''        <div class="option">
+          <h3>No project? Use this prompt</h3>
+          <p>Copy this prompt and paste it into a new chat in Claude, ChatGPT, Gemini or Copilot. If you have your Brand File from the course, paste that in too.</p>
+          <div class="prompt">
+            <pre id="prompt">{prompt}</pre>
+            <div class="bar"><span>Origin story prompt</span><button class="btn" type="button" data-copy="prompt">Copy the prompt</button></div>
+          </div>
         </div>
-        <div class="option">
-          <h3>Using any other AI?</h3>
-          <p>[PLACEHOLDER: the origin story prompt goes here, with a copy button, once the 8 steps are added.]</p>
-        </div>
+        <p class="note">At the end, your coach gives you your finished origin story. Copy it and keep it somewhere safe.</p>
       </section>
 
       <section class="block">
-        <p class="label plain">What’s next</p>
-        <p>Once you know your story, find out how it lands. My free 5-day email course shows you how to get feedback you’ll love by asking for advice instead. <a href="/">Start the free course →</a></p>
+        <p class="label plain">Find out how it lands</p>
+        <p>My free 5-day email course shows you how to get feedback you’ll love by asking for advice instead. <a href="/">Start the free course →</a></p>
       </section>
 
 '''
-    out += FOOT.format(script='')
+    out += cim_cta('Turn your story into <em>a career plan</em>')
+    out += FOOT.format(script=COPY_JS)
     return out
 
-def skill_page():
+def setup_page():
+    instr = html.escape(instructions, quote=False)
     out = HEAD.format(title='Set up your AI coach')
     out += progress(0, 'Who Am I Really? · Set-up')
-    out += '''      <h1>Set up your AI coach</h1>
-      <p class="lead">Your coach knows the whole course. It asks one question at a time, notices patterns in your answers, and helps you draft your story in your own words. Pick the option that suits you.</p>
+    out += f'''      <h1>Set up your AI coach</h1>
+      <p class="lead">Your coach lives in one project in the AI assistant you already use. Set it up once, in about three minutes. After that, every new chat in the project is your coach, and it knows the whole course.</p>
+      <p class="lead">It asks one question at a time, notices patterns in your answers, and helps you draft your story in your own words.</p>
 
       <section class="session">
-        <p class="label">''' + PLAY + '''Option A: the coaching skill for Claude</p>
-        <h2>About 5 minutes to set up</h2>
-        <p style="margin-top:16px"><a class="btn big" href="../downloads/''' + SKILL_ZIP + '''" download>Download the coach</a></p>
+        <p class="label">{PLAY}Step 1: get your two pieces</p>
+        <h2>The coaching file and the project instructions</h2>
         <div class="option">
-          <h3>Then, in Claude:</h3>
-          <ol style="margin:8px 0 0 22px;display:grid;gap:6px;font-size:16.5px;line-height:1.5">
-            <li>Go to <strong>Settings › Capabilities</strong> and turn on <strong>code execution</strong>.</li>
-            <li>Go to <strong>Customize › Skills</strong>, click <strong>+</strong>, then <strong>Create skill › Upload a skill</strong>.</li>
-            <li>Upload the file you downloaded (don’t unzip it) and switch the skill on.</li>
-            <li>Optional but recommended: create a project called <strong>Who Am I Really?</strong> and do each day’s session as a new chat inside it. That keeps your answers together and separate from everything else.</li>
-            <li>Start a new chat and type <span class="cmd">Start Day 1</span></li>
+          <h3>The coaching file</h3>
+          <p>This is everything your coach needs to know about the course.</p>
+          <p style="margin-top:12px"><a class="btn big" href="../downloads/{COACH_FILE}" download>Download the coaching file</a></p>
+        </div>
+        <div class="option">
+          <h3>The project instructions</h3>
+          <p>You’ll paste this short text into your project in Step 2.</p>
+          <div class="prompt">
+            <pre id="instructions">{instr}</pre>
+            <div class="bar"><span>Project instructions</span><button class="btn" type="button" data-copy="instructions">Copy the instructions</button></div>
+          </div>
+        </div>
+        <p class="note">The coaching file is © Jason Moore and licensed for your personal use. Please don’t share or copy it.</p>
+      </section>
+
+      <section class="session">
+        <p class="label">{PLAY}Step 2: create your project</p>
+        <h2>Pick the AI you already use</h2>
+        <p class="note">Menu and button names change from time to time, so yours may look slightly different.</p>
+        <div class="option">
+          <h3>Claude (recommended)</h3>
+          <ol class="steps-list">
+            <li>Open <strong>Projects</strong> and create a new project called <strong>Who Am I Really?</strong></li>
+            <li>Open the project’s <strong>instructions</strong> and paste in the project instructions.</li>
+            <li>Add the coaching file to the project’s <strong>files</strong>.</li>
+            <li>Start a new chat inside the project and type <span class="cmd">Start Day 1</span></li>
           </ol>
         </div>
         <div class="option">
-          <h3>Using ChatGPT?</h3>
-          <p>[PLACEHOLDER: ChatGPT steps, once tested.]</p>
+          <h3>ChatGPT</h3>
+          <ol class="steps-list">
+            <li>Create a new <strong>project</strong> (or a custom GPT, if your plan allows it) called <strong>Who Am I Really?</strong></li>
+            <li>Paste the project instructions into the project’s <strong>instructions</strong>.</li>
+            <li>Add the coaching file to the project’s <strong>files</strong>.</li>
+            <li>Start a new chat in the project and type <span class="cmd">Start Day 1</span></li>
+          </ol>
+        </div>
+        <div class="option">
+          <h3>Gemini</h3>
+          <ol class="steps-list">
+            <li>Create a new <strong>Gem</strong> called <strong>Who Am I Really?</strong></li>
+            <li>Paste the project instructions into the Gem’s <strong>instructions</strong>.</li>
+            <li>Add the coaching file to the Gem’s <strong>knowledge</strong>.</li>
+            <li>Start a chat with the Gem and type <span class="cmd">Start Day 1</span></li>
+          </ol>
         </div>
       </section>
 
       <section class="block">
-        <p class="label plain">Option B: no set-up</p>
-        <p>Each day’s email links to a page with a prompt. Copy it, paste it into the AI tool you already use (Claude, ChatGPT, Gemini or Copilot), and the coaching starts. <a href="../day-1/">See the Day 1 page →</a></p>
+        <p class="label plain">Using your coach</p>
+        <p>Open a new chat in your project for each session, then type:</p>
+        <ul class="commands">
+          <li><span class="cmd">Start Day 1</span> to <span class="cmd">Start Day 5</span> to work through the course, one day at a time</li>
+          <li><span class="cmd">Start my origin story</span> for the bonus chapter</li>
+          <li>Or just ask for help with your story in your own words</li>
+        </ul>
       </section>
 
       <section class="block">
         <p class="label plain">How your coach remembers</p>
-        <p><strong>Using the Claude skill?</strong> Your coach saves a short summary of your answers to Claude’s memory at the end of each day. The next day, just type <span class="cmd">Start Day 2</span> and it picks up where you left off. You can ask Claude to forget it at any time. If memory is turned off in your account (some work accounts do this), your coach gives you a Brand File to copy instead.</p>
-        <p><strong>Using the prompts?</strong> At the end of each day, your coach gives you a Brand File: a short summary of your answers. Save it somewhere safe: a note on your phone, a document, an email to yourself. The next day, paste it in and your coach picks up where you left off.</p>
+        <p>If your AI has memory turned on, your coach saves a short summary of your answers at the end of each day, and picks up where you left off in the next chat. You can ask it to forget at any time.</p>
+        <p>If memory is off (some work accounts do this), your coach gives you a Brand File instead: a short summary of your answers. Save it somewhere safe and paste it in next time.</p>
         <p>On Day 5, either way, you get your finished story and introduction to keep.</p>
+      </section>
+
+      <section class="block">
+        <p class="label plain">Rather not set anything up?</p>
+        <p>Each day’s email links to a page with a prompt. Copy it, paste it into the AI tool you already use, and the coaching starts. <a href="../day-1/">See the Day 1 page →</a></p>
       </section>
 
       <section class="block">
@@ -276,12 +376,13 @@ def skill_page():
       </section>
 
 '''
-    out += FOOT.format(script='')
+    out += cim_cta('Add <em>Career in Motion</em> to the same project')
+    out += FOOT.format(script=COPY_JS)
     return out
 
 pages = {f'day-{n}': day_page(n, d) for n, d in DAYS.items()}
 pages['bonus'] = bonus_page()
-pages['skill'] = skill_page()
+pages['skill'] = setup_page()
 for slug, page in pages.items():
     os.makedirs(os.path.join(HERE, slug), exist_ok=True)
     open(os.path.join(HERE, slug, 'index.html'), 'w', encoding='utf-8').write(page)
